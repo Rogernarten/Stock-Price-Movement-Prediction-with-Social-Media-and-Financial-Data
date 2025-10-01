@@ -1,0 +1,15 @@
+# Core dependencies
+numpy
+pandas
+scikit-learn
+xgboost
+matplotlib
+seaborn
+
+# Deep learning / NLP
+torch
+transformers
+
+# Jupyter environment
+jupyter
+notebook
