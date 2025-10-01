@@ -1,68 +1,84 @@
-# 📈 Stock Price Movement Prediction with Social Media and Financial Data
+# Stock Price Movement Prediction with Text & Numerical Data
 
-Predicting short-term stock price movements by integrating structured financial indicators with unstructured social media text.  
-This project combines Random Forest and LightGBM models with TF-IDF and BERT embeddings to capture both market signals and investor sentiment.
-
----
-
-## 📊 Dataset and Preprocessing
-- **Structured Data**  
-  - Daily return (`return_1d`)  
-  - 3-day mean return (`return_3d_mean`)  
-  - 3-day volatility (`volatility_3d`)  
-  - 3-day momentum (`momentum_3d`)  
-
-- **Unstructured Data**  
-  - Tweets mentioning target stocks (likes, retweets, comments, text)  
-
-- **Preprocessing**  
-  - Merged into a unified dataframe: `processed_model_data_with_price.csv`  
-  - Labels: stock movement at **t+1** and **t+7** (binary: up = 1, down = 0)  
+## 📌 Overview
+This project explores the integration of **structured financial data** and **unstructured text data** (e.g., social media/news sentiment) to predict **short-term and mid-term stock price movements**.  
+The approach combines **feature engineering** from numerical data with **sentiment features** extracted via a pre-trained BERT model.  
+We evaluate multiple machine learning models (RandomForest, XGBoost, MLP) and implement **ensemble learning** for improved performance.
 
 ---
 
-## 🏗️ Baseline Models
-- **Random Forest A**: Social media features only (likes, retweets, comments).  
-- **Random Forest B**: Technical indicators only (returns, volatility, momentum).  
-- **Random Forest C**: Combination of social + technical features.  
+## 📂 Dataset
+Each record corresponds to:
+- **Daily stock data** (open, close, high, low, etc.)
+- **Concatenated related text data** for the same day
 
-These baselines validate the effectiveness of structured signals in prediction.
+### Key Features
+- **Return**: `(Close - Open) / Open`  
+- **Volatility**: `(High - Low) / Open`  
+- **Text Length**: Number of tokens after concatenation  
+- **Engagement Score**: Weighted sum of likes, retweets, comments  
+- **BERT-based Sentiment Score**: Extracted via pretrained sentiment classification model  
 
----
-
-## 🚀 Main Models
-
-### 1. TF-IDF + Numerical Features + LightGBM
-- Vectorized tweet text with **TF-IDF** (1000 dimensions).  
-- Concatenated with normalized financial indicators.  
-- Designed a weighted influence function
--  Helps capture asymmetric information flow and improve predictive performance.
-
-### 2. BERT Embeddings + Numerical Features + LightGBM
-- Encoded tweet text with **pre-trained sentence-transformers BERT** (768 dimensions).  
-- Combined semantic embeddings with structured financial features.  
-- Provides deeper understanding of investor sentiment beyond word frequency.  
+### Labels
+- **label_t+1**: Whether the stock closes higher the next day  
+- **label_t+7**: Whether the stock closes higher 7 days later  
 
 ---
 
-## 📌 Results & Insights
-- Baseline Random Forest models confirm predictive value of both social and financial features.  
-- TF-IDF and BERT text embeddings improve model accuracy and robustness.  
-- Weighted tweet interactions highlight the disproportionate influence of viral tweets.  
+## ⚙️ Methodology
+1. **Feature Engineering**
+   - Normalization of numerical features
+   - Extraction of text sentiment scores
+   - Merging structured + unstructured features  
+
+2. **Baseline Models**
+   - Random Forest  
+   - XGBoost  
+   - Multi-Layer Perceptron (MLP)  
+
+3. **Hyperparameter Tuning**
+   - Grid Search  
+   - 3-Fold Cross Validation  
+
+4. **Ensemble Learning**
+   - Stacking the best models for improved generalization  
 
 ---
 
-## 🔮 Future Work
-- Incorporate **multimodal transformers** for joint modeling.  
-- Extend beyond binary classification to **return regression** and **anomaly detection**.  
-- Use more diverse data sources (Reddit, news, financial podcasts).  
-- Evaluate robustness under **extreme market events** (e.g., black swans).  
+## 📊 Results
+- **Best Single Model (t+1 prediction)**: ~83.6% accuracy  
+- **Ensemble Model**: ~65% accuracy (not significantly better than baseline)  
+- **Simulated Trading**: Demonstrated ability to achieve **both short-term and long-term profitability**  
 
 ---
 
-## ⚙️ Installation & Usage
-
-Clone the repository:
+## 🚀 Usage
+### Prerequisites
+- Python 3.9+
+- Install dependencies:
 ```bash
-git clone https://github.com/yourname/stock-prediction-social.git
-cd stock-prediction-social
+pip install -r requirements.txt
+```
+
+### Run Jupyter Notebook
+```bash
+jupyter notebook findata_v2-Eng.ipynb
+```
+
+### Reproduce Experiments
+- Data preprocessing  
+- Feature engineering  
+- Model training & evaluation  
+- Trading simulation  
+
+---
+
+## 📈 Future Improvements
+- Experiment with **transformer-based financial embeddings**  
+- Explore **alternative ensemble strategies** (e.g., boosting + neural nets hybrid)  
+- Incorporate **macro-economic indicators** and **longer historical context**  
+
+---
+
+## 📜 License
+This project is released under the MIT License.  
