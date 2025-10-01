@@ -8,20 +8,22 @@ We evaluate multiple machine learning models (RandomForest, XGBoost, MLP) and im
 ---
 
 ## 📂 Dataset
-Each record corresponds to:
-- **Daily stock data** (open, close, high, low, etc.)
-- **Concatenated related text data** for the same day
+Due to size limitations, the **full dataset** is hosted externally.  
 
-### Key Features
-- **Return**: `(Close - Open) / Open`  
-- **Volatility**: `(High - Low) / Open`  
-- **Text Length**: Number of tokens after concatenation  
-- **Engagement Score**: Weighted sum of likes, retweets, comments  
-- **BERT-based Sentiment Score**: Extracted via pretrained sentiment classification model  
+- 🔗 [Download Full Dataset (Google Drive)](https://drive.google.com/file/d/1B5Y3XuMVKXvOhEBBFQngeNFp-a7I01Yh/view?usp=drive_link)  
+- A small **sample dataset** (`data/sample_data.csv`) is included in the repository for quick testing.  
 
-### Labels
-- **label_t+1**: Whether the stock closes higher the next day  
-- **label_t+7**: Whether the stock closes higher 7 days later  
+### Automatic Download
+You can also fetch the full dataset automatically with the provided script:
+
+```bash
+bash scripts/download_data.sh
+```
+
+This will:
+- Create a `data/` folder  
+- Download the full dataset from Google Drive  
+- Unzip it (if applicable)  
 
 ---
 
